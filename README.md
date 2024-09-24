@@ -53,7 +53,7 @@
 
 1. **Склонируйте репозиторий**:
    ```bash
-   git clone https://github.com/yourusername/minesweeper.git
+   git clone https://github.com/shindasayonara/minesweeper.git
    ```
 
 2. **Перейдите в каталог проекта**:
@@ -74,7 +74,7 @@
    - Или если ваш пакет опубликован на Packagist, установите его глобально:
 
    ```bash
-   composer global require yourusername/minesweeper
+   composer global require shindasayonara/minesweeper
    ```
 
    - И затем выполните команду:
