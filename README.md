@@ -58,7 +58,7 @@
 
 2. **Перейдите в каталог проекта**:
    ```bash
-   cd C:\CREATE_BD\402_DBTech_Puchkin_IYu\Task02\minesweeper
+   cd C:\...\minesweeper
    ```
 
 3. **Установите зависимости через Composer**:
