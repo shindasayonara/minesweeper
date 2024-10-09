@@ -1,20 +1,20 @@
 <?php return array(
     'root' => array(
-        'name' => '__root__',
+        'name' => 'shindasayonara/minesweeper',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'bcc3612362eac4ecb70d40323a8f0bb529929a4e',
-        'type' => 'library',
+        'reference' => 'bb1e7a2c3f6cad990ca3e461aaaee51d76b257f1',
+        'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        '__root__' => array(
+        'shindasayonara/minesweeper' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'bcc3612362eac4ecb70d40323a8f0bb529929a4e',
-            'type' => 'library',
+            'reference' => 'bb1e7a2c3f6cad990ca3e461aaaee51d76b257f1',
+            'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,

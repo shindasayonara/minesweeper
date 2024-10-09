@@ -4,4 +4,9 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Shindasayonara\Minesweeper\Controller;
 
-Controller\startGame();
+$width = isset($argv[1]) ? (int)$argv[1] : 10;
+$height = isset($argv[2]) ? (int)$argv[2] : 10;
+$mines = isset($argv[3]) ? (int)$argv[3] : 10;
+$saveToDatabase = in_array('--save', $argv);
+
+Controller\startGame($width, $height, $mines, $saveToDatabase);

@@ -9,4 +9,5 @@ return array(
     'be01b9b16925dcb22165c40b46681ac6' => $vendorDir . '/wp-cli/php-cli-tools/lib/cli/cli.php',
     '9c5862424d05d280c765d8ccf9337068' => $baseDir . '/src/Controller.php',
     'd599a078641a3da5d0aa82ea66232807' => $baseDir . '/src/View.php',
+    '844b599a48bf6d3bade081456e7bcdc9' => $baseDir . '/src/Game.php',
 );
