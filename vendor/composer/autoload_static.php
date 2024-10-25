@@ -11,26 +11,27 @@ class ComposerStaticInitabc704b282a76268a3554fa71faa24c1
         '9c5862424d05d280c765d8ccf9337068' => __DIR__ . '/../..' . '/src/Controller.php',
         'd599a078641a3da5d0aa82ea66232807' => __DIR__ . '/../..' . '/src/View.php',
         '844b599a48bf6d3bade081456e7bcdc9' => __DIR__ . '/../..' . '/src/Game.php',
+        '00b62a8c5f280603699f7b9781831159' => __DIR__ . '/../..' . '/src/Database.php',
     );
 
     public static $prefixLengthsPsr4 = array (
-        'S' => 
+        'S' =>
         array (
             'Shindasayonara\\Minesweeper\\' => 27,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Shindasayonara\\Minesweeper\\' => 
+        'Shindasayonara\\Minesweeper\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
     );
 
     public static $prefixesPsr0 = array (
-        'c' => 
+        'c' =>
         array (
-            'cli' => 
+            'cli' =>
             array (
                 0 => __DIR__ . '/..' . '/wp-cli/php-cli-tools/lib',
             ),
@@ -48,7 +49,6 @@ class ComposerStaticInitabc704b282a76268a3554fa71faa24c1
             $loader->prefixDirsPsr4 = ComposerStaticInitabc704b282a76268a3554fa71faa24c1::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitabc704b282a76268a3554fa71faa24c1::$prefixesPsr0;
             $loader->classMap = ComposerStaticInitabc704b282a76268a3554fa71faa24c1::$classMap;
-
         }, null, ClassLoader::class);
     }
 }
