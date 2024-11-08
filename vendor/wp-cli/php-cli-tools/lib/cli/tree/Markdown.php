@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHP Command Line Tools
  *
@@ -16,8 +15,8 @@ namespace cli\tree;
 /**
  * The ASCII renderer renders trees with ASCII lines.
  */
-class Markdown extends Renderer
-{
+class Markdown extends Renderer {
+
     /**
      * How many spaces to indent by
      * @var int
@@ -29,7 +28,8 @@ class Markdown extends Renderer
      */
     function __construct($padding = null)
     {
-        if ($padding) {
+        if ($padding)
+        {
             $this->_padding = $padding;
         }
     }
@@ -45,8 +45,11 @@ class Markdown extends Renderer
     {
         $output = '';
 
-        foreach ($tree as $label => $next) {
-            if (is_string($next)) {
+        foreach ($tree as $label => $next)
+        {
+
+            if (is_string($next))
+            {
                 $label = $next;
             }
 
@@ -54,11 +57,14 @@ class Markdown extends Renderer
             $output .= sprintf("%s- %s\n", str_repeat(' ', $level * $this->_padding), $label);
 
             // Next level
-            if (is_array($next)) {
+            if (is_array($next))
+            {
                 $output .= $this->render($next, $level + 1);
             }
+
         }
 
         return $output;
     }
+
 }

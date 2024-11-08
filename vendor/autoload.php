@@ -6,7 +6,7 @@ if (PHP_VERSION_ID < 50600) {
     if (!headers_sent()) {
         header('HTTP/1.1 500 Internal Server Error');
     }
-    $err = 'Composer 2.3.0 dropped support for autoloading on PHP <5.6 and you are running ' . PHP_VERSION . ', please upgrade PHP or use Composer 2.2 LTS via "composer self-update --2.2". Aborting.' . PHP_EOL;
+    $err = 'Composer 2.3.0 dropped support for autoloading on PHP <5.6 and you are running '.PHP_VERSION.', please upgrade PHP or use Composer 2.2 LTS via "composer self-update --2.2". Aborting.'.PHP_EOL;
     if (!ini_get('display_errors')) {
         if (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') {
             fwrite(STDERR, $err);
@@ -22,4 +22,4 @@ if (PHP_VERSION_ID < 50600) {
 
 require_once __DIR__ . '/composer/autoload_real.php';
 
-return ComposerAutoloaderInitabc704b282a76268a3554fa71faa24c1::getLoader();
+return ComposerAutoloaderInit90bd99dbbdf7d17bb9837aa2908bef26::getLoader();

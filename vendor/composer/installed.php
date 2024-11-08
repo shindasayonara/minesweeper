@@ -1,6 +1,4 @@
-<?php
-
-return array(
+<?php return array(
     'root' => array(
         'name' => 'shindasayonara/minesweeper',
         'pretty_version' => 'dev-master',
