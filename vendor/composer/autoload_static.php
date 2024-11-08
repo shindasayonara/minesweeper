@@ -19,12 +19,20 @@ class ComposerStaticInitabc704b282a76268a3554fa71faa24c1
         array (
             'Shindasayonara\\Minesweeper\\' => 27,
         ),
+        'R' =>
+        array (
+            'RedBeanPHP\\' => 11,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
         'Shindasayonara\\Minesweeper\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src',
+        ),
+        'RedBeanPHP\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/gabordemooij/redbean/RedBeanPHP',
         ),
     );
 

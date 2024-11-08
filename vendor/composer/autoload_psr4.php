@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Shindasayonara\\Minesweeper\\' => array($baseDir . '/src'),
+    'RedBeanPHP\\' => array($vendorDir . '/gabordemooij/redbean/RedBeanPHP'),
 );

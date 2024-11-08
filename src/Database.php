@@ -2,91 +2,61 @@
 
 namespace Shindasayonara\Minesweeper;
 
+use RedBeanPHP\R as R;
+
 class Database
 {
-    private $pdo;
-
     public function __construct()
     {
-        $this->pdo = new \PDO('sqlite:minesweeper.db');
-        $this->createTables();
+        // Проверка на существование подключения
+        if (!R::testConnection()) {
+            R::setup('sqlite:minesweeper.db');
+            R::ext('xdispense', function ($type) {
+                return R::dispense($type);
+            });
+        }
     }
-
-    private function createTables()
-    {
-        $this->pdo->exec("CREATE TABLE IF NOT EXISTS games (
-            id INTEGER PRIMARY KEY,
-            date TEXT,
-            player_name TEXT UNIQUE, -- добавлено уникальное ограничение
-            width INTEGER,
-            height INTEGER,
-            mines INTEGER,
-            board TEXT,
-            revealed TEXT,
-            gameOver INTEGER
-        )");
-
-        $this->pdo->exec("CREATE TABLE IF NOT EXISTS moves (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            game_id INTEGER,
-            move_number INTEGER,
-            x INTEGER,
-            y INTEGER,
-            result TEXT,
-            FOREIGN KEY (game_id) REFERENCES games(id)
-        )");
-        // $this->resetAutoIncrement();
-    }
-    //public function resetAutoIncrement() {
-    //    $this->pdo->exec("DELETE FROM sqlite_sequence WHERE name='games'");
-    //}
 
     public function saveGame($gameState, $playerName)
     {
-        $stmt = $this->pdo->prepare("INSERT OR IGNORE INTO games (date, player_name, width, height, mines, board, revealed, gameOver) 
-                                     VALUES (:date, :player_name, :width, :height, :mines, :board, :revealed, :gameOver)");
-        $stmt->execute([
-            ':date' => date('Y-m-d H:i:s'),
-            ':player_name' => $playerName,
-            ':width' => $gameState['width'],
-            ':height' => $gameState['height'],
-            ':mines' => $gameState['mines'],
-            ':board' => json_encode($gameState['board']),
-            ':revealed' => json_encode($gameState['revealed']),
-            ':gameOver' => $gameState['gameOver']
-        ]);
+        $game = R::findOne('games', 'player_name = ?', [$playerName]);
 
-        if ($this->pdo->lastInsertId() == 0) {
-            $stmt = $this->pdo->prepare("UPDATE games SET date = :date, width = :width, height = :height, mines = :mines, 
-                                          board = :board, revealed = :revealed, gameOver = :gameOver WHERE player_name = :player_name");
-            $stmt->execute([
-                ':date' => date('Y-m-d H:i:s'),
-                ':player_name' => $playerName,
-                ':width' => $gameState['width'],
-                ':height' => $gameState['height'],
-                ':mines' => $gameState['mines'],
-                ':board' => json_encode($gameState['board']),
-                ':revealed' => json_encode($gameState['revealed']),
-                ':gameOver' => $gameState['gameOver']
-            ]);
+        if (!$game) {
+            $game = R::xdispense('games');
         }
 
-        return $this->pdo->lastInsertId();
+        $game->date = date('Y-m-d H:i:s');
+        $game->player_name = $playerName;
+        $game->width = $gameState['width'];
+        $game->height = $gameState['height'];
+        $game->mines = $gameState['mines'];
+        $game->board = json_encode($gameState['board']);
+        $game->revealed = json_encode($gameState['revealed']);
+        $game->gameOver = $gameState['gameOver'];
+
+        return R::store($game);
     }
 
     public function loadGame($gameId)
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM games WHERE id = :id");
-        $stmt->execute([':id' => $gameId]);
-        $game = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $game = R::load('games', $gameId);
 
-        if ($game) {
-            $game['board'] = json_decode($game['board'], true);
-            $game['revealed'] = json_decode($game['revealed'], true);
+        if ($game->id) {
+            return [
+            'date' => $game->date,             // Добавляем date
+            'player_name' => $game->player_name, // Добавляем player_name
+            'width' => $game->width,
+            'height' => $game->height,
+            'mines' => $game->mines,
+            'board' => json_decode($game->board, true),
+            'revealed' => json_decode($game->revealed, true),
+            'gameOver' => $game->gameOver
+            ];
         }
 
-        return $game;
+        return null;
     }
+
 
     public function saveMove($gameId, $moveNumber, $x, $y, $result)
     {
@@ -95,48 +65,61 @@ class Database
             return;
         }
 
-        $stmt = $this->pdo->prepare("INSERT INTO moves (game_id, move_number, x, y, result) 
-                                     VALUES (:game_id, :move_number, :x, :y, :result)");
-        $stmt->execute([
-            ':game_id' => $gameId,
-            ':move_number' => $moveNumber,
-            ':x' => $x,
-            ':y' => $y,
-            ':result' => $result
-        ]);
+        $move = R::xdispense('moves');
+        $move->game_id = $gameId;
+        $move->move_number = $moveNumber;
+        $move->x = $x;
+        $move->y = $y;
+        $move->result = $result;
+
+        R::store($move);
 
         \cli\line("Move saved: Game ID: $gameId, Move Number: $moveNumber, Coordinates: ($x, $y), Result: $result");
     }
 
     private function gameExists($gameId)
     {
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM games WHERE id = :id");
-        $stmt->execute([':id' => $gameId]);
-        return $stmt->fetchColumn() > 0;
+        return (bool)R::count('games', 'id = ?', [$gameId]);
     }
 
     public function listGames()
     {
-        $stmt = $this->pdo->query("SELECT id, date, player_name, width, height, mines, gameOver FROM games");
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $games = R::findAll('games');
+        $result = [];
+
+        foreach ($games as $game) {
+            $result[] = [
+                'id' => $game->id,
+                'date' => $game->date,
+                'player_name' => $game->player_name,
+                'width' => $game->width,
+                'height' => $game->height,
+                'mines' => $game->mines,
+                'gameOver' => $game->gameOver
+            ];
+        }
+
+        return $result;
     }
 
     public function replayGame($gameId)
     {
-        $gameData = $this->loadGame($gameId);
-        if (!$gameData) {
-            echo "Game not found!\n";
-            return;
+        $game = $this->loadGame($gameId);
+        if (!$game) {
+              echo "Game not found!\n";
+              return;
         }
 
-        echo "Stories of {$gameData['player_name']} game\n";
-        echo "ID: {$gameData['id']} | Date: {$gameData['date']} | Player: {$gameData['player_name']} | Size: {$gameData['width']}x{$gameData['height']} | Mines: {$gameData['mines']} | Status: " . ($gameData['gameOver'] ? 'Finished' : 'In Progress') . "\n";
+        echo "Stories of {$game['player_name']} game\n";
+        echo "ID: $gameId | Date: {$game['date']} | Player: {$game['player_name']} | Size: {$game['width']}x{$game['height']} | Mines: {$game['mines']} | Status: " . ($game['gameOver'] ? 'Finished' : 'In Progress') . "\n";
 
-        $moves = $this->pdo->prepare("SELECT * FROM moves WHERE game_id = :game_id ORDER BY move_number");
-        $moves->execute([':game_id' => $gameId]);
+     // Получаем ходы и корректируем нумерацию для отображения с 1
+        $moves = R::findAll('moves', 'game_id = ? ORDER BY move_number', [$gameId]);
 
-        foreach ($moves->fetchAll(\PDO::FETCH_ASSOC) as $index => $move) {
-            echo "Move #" . ($index + 1) . ": ({$move['x']}, {$move['y']}) - {$move['result']}\n";
+        $displayedMoveNumber = 1;
+        foreach ($moves as $move) {
+             echo "Move #$displayedMoveNumber: ({$move->x}, {$move->y}) - {$move->result}\n";
+             $displayedMoveNumber++;
         }
     }
 }
