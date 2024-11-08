@@ -11,14 +11,12 @@
     ),
     'versions' => array(
         'gabordemooij/redbean' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => '1bb7b5b93031d1a458a503ee91b595c8f7a8c83d',
+            'pretty_version' => 'v5.7.4',
+            'version' => '5.7.4.0',
+            'reference' => '274c426583d91b20a1e39968b2e20969ef83cd1d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../gabordemooij/redbean',
-            'aliases' => array(
-                0 => '9999999-dev',
-            ),
+            'aliases' => array(),
             'dev_requirement' => false,
         ),
         'shindasayonara/minesweeper' => array(
