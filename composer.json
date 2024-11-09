@@ -5,7 +5,8 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Shindasayonara\\Minesweeper\\": "src/"
+            "Shindasayonara\\Minesweeper\\": "src/",
+            "RedBeanPHP\\": "vendor/gabordemooij/redbean/RedBeanPHP/"
         },
         "files": [
             "src/Controller.php",
