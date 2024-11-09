@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'shindasayonara/minesweeper',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => '6d7cdb54b696960476db83ca32b929569298cef5',
+        'pretty_version' => 'dev-main1',
+        'version' => 'dev-main1',
+        'reference' => 'e0d8d7217396ec2ee56a1fb0a9610f35e09ab3da',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -20,9 +20,9 @@
             'dev_requirement' => false,
         ),
         'shindasayonara/minesweeper' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => '6d7cdb54b696960476db83ca32b929569298cef5',
+            'pretty_version' => 'dev-main1',
+            'version' => 'dev-main1',
+            'reference' => 'e0d8d7217396ec2ee56a1fb0a9610f35e09ab3da',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

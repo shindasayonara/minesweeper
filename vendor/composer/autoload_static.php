@@ -33,6 +33,7 @@ class ComposerStaticInit90bd99dbbdf7d17bb9837aa2908bef26
         'RedBeanPHP\\' => 
         array (
             0 => __DIR__ . '/..' . '/gabordemooij/redbean/RedBeanPHP',
+            1 => __DIR__ . '/..' . '/gabordemooij/redbean/RedBeanPHP',
         ),
     );
 
